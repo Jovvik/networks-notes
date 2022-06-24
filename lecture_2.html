@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="lecture_1.html"><strong aria-hidden="true">1.</strong> Лекция 1</a></li><li class="chapter-item expanded "><a href="lecture_2.html" class="active"><strong aria-hidden="true">2.</strong> Лекция 2</a></li><li class="chapter-item expanded "><a href="lecture_3.html"><strong aria-hidden="true">3.</strong> Лекция 3</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="lecture_1.html"><strong aria-hidden="true">1.</strong> Лекция 1</a></li><li class="chapter-item expanded "><a href="lecture_2.html" class="active"><strong aria-hidden="true">2.</strong> Лекция 2</a></li><li class="chapter-item expanded "><a href="lecture_3.html"><strong aria-hidden="true">3.</strong> Лекция 3</a></li><li class="chapter-item expanded "><a href="lecture_4.html"><strong aria-hidden="true">4.</strong> Лекция 4</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -250,7 +250,7 @@
 <li>Header checksum - контрольная сумма заголовка, кроме TTL.
 Пакеты настолько редко ломаются, что IPv6 решил это убрать.</li>
 <li>Padding дополняет нулями пакет, если options слишком короткий. Дополнение идет до целого числа 32-битных слов.</li>
-<li>Type of Service (IPv4) или Traffic Class (IPv6) - важность пакета. Важность локальна в рамках сети, например провайдер сам решает, что выставить. Последние два бита - ECN (Explicit Congestion Notification). Если отправитель его выставил и в каком-то из узлов на пути становится мало места, то он может отправить пакет дальше с пометкой Congestion Control. Когда отправитель получит пакет назад (с выставленными метками), то он должен реагировать так, как будто встретил дроп пакетов.</li>
+<li>Type of Service (IPv4) или Traffic Class (IPv6) - важность пакета. Важность локальна в рамках сети, например провайдер сам решает, что выставить. Последние два бита - ECN (Explicit Congestion Notification). Если отправитель его выставил и в каком-то из узлов на пути становится мало места, то он может отправить пакет дальше с пометкой Congestion Control. Когда отправитель получит пакет назад (с выставленными метками), то он должен реагировать так, как будто встретил дроп пакетов. См. <a href="lecture_4.html#explicit-congestion-notification">четвертую лекцию</a></li>
 <li>Flow Label (IPv6) - идентификатор потока. Роутеры будут стараться <strong>(но не обязаны)</strong> посылать пакеты в одном потоке по одному и тому же маршруту, чтобы пакеты приходили по порядку.</li>
 </ul>
 <p>IPv4 гарантирует, что можно передать пакет размером 768 байт или меньше (включая заголовок), IPv6 - 1280 байт, а возможно и больше. Для WiFi или витой пары обычное ограничение сверху - 1506 байт.
