@@ -1,6 +1,7 @@
 # Summary
 
-- [Лекция 1](./lecture_1.md)
-- [Лекция 2](./lecture_2.md)
-- [Лекция 3](./lecture_3.md)
-- [Лекция 4](./lecture_4.md)
+- [Лекция 1 Введение](./lecture_1.md)
+- [Лекция 2. IP](./lecture_2.md)
+- [Лекция 3. IP+Ethernet](./lecture_3.md)
+- [Лекция 4. TCP, UDP](./lecture_4.md)
+- [Лекция 5. Роутинг](./lecture_5.md)
