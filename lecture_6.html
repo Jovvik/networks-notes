@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - Конспект по сетям</title>
-        <base href="/">
+        <title>Лекция 6. - Конспект по сетям</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -78,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="lecture_1.html"><strong aria-hidden="true">1.</strong> Лекция 1 Введение</a></li><li class="chapter-item expanded "><a href="lecture_2.html"><strong aria-hidden="true">2.</strong> Лекция 2. IP</a></li><li class="chapter-item expanded "><a href="lecture_3.html"><strong aria-hidden="true">3.</strong> Лекция 3. IP+Ethernet</a></li><li class="chapter-item expanded "><a href="lecture_4.html"><strong aria-hidden="true">4.</strong> Лекция 4. TCP, UDP</a></li><li class="chapter-item expanded "><a href="lecture_5.html"><strong aria-hidden="true">5.</strong> Лекция 5. Роутинг</a></li><li class="chapter-item expanded "><a href="lecture_6.html"><strong aria-hidden="true">6.</strong> Лекция 6.</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="lecture_1.html"><strong aria-hidden="true">1.</strong> Лекция 1 Введение</a></li><li class="chapter-item expanded "><a href="lecture_2.html"><strong aria-hidden="true">2.</strong> Лекция 2. IP</a></li><li class="chapter-item expanded "><a href="lecture_3.html"><strong aria-hidden="true">3.</strong> Лекция 3. IP+Ethernet</a></li><li class="chapter-item expanded "><a href="lecture_4.html"><strong aria-hidden="true">4.</strong> Лекция 4. TCP, UDP</a></li><li class="chapter-item expanded "><a href="lecture_5.html"><strong aria-hidden="true">5.</strong> Лекция 5. Роутинг</a></li><li class="chapter-item expanded "><a href="lecture_6.html" class="active"><strong aria-hidden="true">6.</strong> Лекция 6.</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,19 +136,55 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="Лекция-6"><a class="header" href="#Лекция-6">Лекция 6.</a></h1>
+<h2 id="Интернет-с-точки-зрения-провайдера"><a class="header" href="#Интернет-с-точки-зрения-провайдера">Интернет с точки зрения провайдера</a></h2>
+<p>Рассмотрим процесс подключения к интернету с точки зрения провайдера.
+У маленького провайдера (допустим, RINET) есть автономная система.
+Обычно RINET идёт к большому провайдеру (Ростелеком) и платит деньги за то, чтобы тот доставлял весь трафик до интернета, потому что у маленького провайдера нет прямых соединений до автономных систем.
+Ростелеком рассказывает RINET через BGP пути до всего интернета (через себя).</p>
+<p>Когда пользователь приходит к RINET и открывает страничку google.com, RINET отправляет запрос через Ростелеком до гугла.
+Проблема такого подхода — RINET не хочет платить Ростелекому. 
+При увеличении размеров RINET проводит прямое соединение до ближайшего маршрутизатора гугла (физически проводит оптоволокно), т.е. устанавливает прямое соединение с автономной системой гугла.
+Такой прямой линк называется <strong>пиринг</strong>.</p>
+<p>Но если RINET недостаточно большой, то гугл не захочет делать пиринг, т.к. им на это нужно резевировать порт, проводить оптику и т.д.</p>
+<p>Есть организации, называемые <strong>Internet Exchange</strong>, например MIX (Moscow IX) или DATAIX.
+У таких организаций есть своя автономная система, в неё воткнуты различные провайдеры и контент-генераторы.
+Они выполняют роль агрегатора, который позволяет провайдерам связаться с контент-генераторами в обход больших провайдеров.</p>
+<p>На самом деле есть несколько <strong>Tier-1</strong> провайдеров (штук 5), к которым подключены все автономные системы напрямую или через транзитных провайдеров (Ростелеком в нашем примере).
+Например, Ростелеком, если нет прямого соединения до АС, идет к COGENT, платит ему денег и подключается к АС через него.</p>
+<h3 id="Блокировки"><a class="header" href="#Блокировки">Блокировки</a></h3>
+<p>COGENT отключил транзит для российских провайдеров.
+Это ломает фундаментальный факт того, что все провайдеры подключены ко всем Tier-1 провайдерам.
+От этого не все сломалось, но если все Tier-1 провайдеры так сделают, то нарушится связность с мелкими сайтами, которые находятся далеко.</p>
+<p>Также Internet Exchange-и могут отключать российских провайдеров, это более страшно, т.к. тогда не хватит пропускной способности каналов.</p>
+<p>Блокировки со стороны России выполняются через крупных провайдеров, т.к. почти весь трафик идёт через них.</p>
+<p>Самый простой тип блокировки — перехватывать DNS и выдавать неверный ответ.
+Это обходится, если использовать DNS over HTTPS.</p>
+<p>Также можно блокировать по ip-адресу сайта.
+Но часто на одном адресе много сайтов, поэтому нужно смотреть внутрь пакетов.
+Если используется HTTPS (а следовательно и TLS), то в пакете написан домен сайта, поэтому можно блокировать по домену.
+Есть хак — можно разрезать пакет в том месте, где находится домен.</p>
+<p>В РФ у провайдеров стоят железки, именуемые ТСПУ, которые просят маршрутизаторы пересылать трафик с интересных IP адресов в ТСПУ.
+ТСПУ делает DPI (Deep Packet Inspection) и либо отправляет пакеты дальше, либо банит.</p>
+<p>VPN банятся в основном по номеру порта, на который он идёт.
+Это делают в основном в Китае, в России банят хипстерские впны, которые не используют компании.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="lecture_5.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="lecture_5.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
             </nav>
 
         </div>
