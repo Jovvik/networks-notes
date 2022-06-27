@@ -6,3 +6,4 @@
 - [Лекция 4. TCP, UDP](./lecture_4.md)
 - [Лекция 5. Роутинг](./lecture_5.md)
 - [Лекция 6.](./lecture_6.md)
+- [Лекция 7. DNS](./lecture_7.md)
