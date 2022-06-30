@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="ru" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Лекция 8. HTTP(S) - Конспект по сетям</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="lecture_1.html"><strong aria-hidden="true">1.</strong> Лекция 1 Введение</a></li><li class="chapter-item expanded "><a href="lecture_2.html"><strong aria-hidden="true">2.</strong> Лекция 2. IP</a></li><li class="chapter-item expanded "><a href="lecture_3.html"><strong aria-hidden="true">3.</strong> Лекция 3. IP+Ethernet</a></li><li class="chapter-item expanded "><a href="lecture_4.html"><strong aria-hidden="true">4.</strong> Лекция 4. TCP, UDP</a></li><li class="chapter-item expanded "><a href="lecture_5.html"><strong aria-hidden="true">5.</strong> Лекция 5. Роутинг</a></li><li class="chapter-item expanded "><a href="lecture_6.html"><strong aria-hidden="true">6.</strong> Лекция 6.</a></li><li class="chapter-item expanded "><a href="lecture_7.html"><strong aria-hidden="true">7.</strong> Лекция 7. DNS</a></li><li class="chapter-item expanded "><a href="lecture_8.html" class="active"><strong aria-hidden="true">8.</strong> Лекция 8. HTTP(S)</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Конспект по сетям</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Лекция-8-https"><a class="header" href="#Лекция-8-https">Лекция 8. HTTP(S)</a></h1>
+<h2 id="http"><a class="header" href="#http">HTTP</a></h2>
+<p>Это очень простой протокол, работает поверх TCP, текстовый.
+Самый базовый функционал — просим файл, нам дают его с метаданными (заголовком).</p>
+<p>URI - Uniform Resource Identifier, обозначает адрес ресурса (который мы запрашиваем).</p>
+<p><code>scheme:[//[user[:password]]@]host[:port]path[?query][#fragment]</code></p>
+<ul>
+<li>scheme - протокол, по которому мы обращаемся к ресурсу.</li>
+<li>порт обычно не надо указывать, т.к. для каждой схемы есть дефолтный порт</li>
+</ul>
+<h3 id="Методы-http"><a class="header" href="#Методы-http">Методы HTTP</a></h3>
+<ul>
+<li>GET: запрашивает заголовки файла и сам файл. Метаданные и файл разделены двумя переносами строки</li>
+<li>HEAD: запрашивает только заголовки, нельзя передавать никакие данные помимо заголовка. Запросы GET и HEAD идемпотентные, т.е. видимое состояние сервера не должно от них меняться.</li>
+<li>POST: отправить данные. Очевидно не идемпотентно и браузер предупреждает перед тем, как отправить POST дважды.</li>
+<li>PUT: заменить файл</li>
+<li>DELETE: удалить файл</li>
+<li>PATCH: изменить часть файла</li>
+<li>OPTIONS: &quot;какие запросы можно посылать?&quot;</li>
+<li>CONNECT: устанавливает двустороннее соединение, как будто TCP. Используется в том числе в вебсокетах.</li>
+<li>TRACE: ответь на запрос теми же заголовками</li>
+</ul>
+<p>Заголовок это key-value пара, разделенная <code>:</code>.
+В частности, необходимо указать заголовок <code>Host</code>.</p>
+<h3 id="Коды-ответа"><a class="header" href="#Коды-ответа">Коды ответа</a></h3>
+<p>В первой строке ответа указывается код ответа.</p>
+<p>Интересные коды:</p>
+<ul>
+<li>1xx: Informational
+<ul>
+<li>101: Switching Protocols - переход с HTTP на что-то другое, например вебсокет</li>
+</ul>
+</li>
+<li>2xx: Все хорошо
+<ul>
+<li>200: OK</li>
+<li>201: Файл был создан</li>
+<li>204: No Content - файл есть, но он пустой или запрос это HEAD и файл отдавать не надо</li>
+</ul>
+</li>
+<li>3xx: Redirection
+<ul>
+<li>301: Moved Permanently - перенаправление на другой адрес, можно кешировать навсегда</li>
+<li>302: Found - то же самое, но временно, нельзя кешировать</li>
+<li>307: Temporary Redirect - как 302, но с адекватным названием</li>
+<li>304: Not Modified - этот файл есть в кеше запрашивающего, не надо его отдавать</li>
+</ul>
+</li>
+<li>4xx: Client Error
+<ul>
+<li>400: Bad Request - запрос не понятен серверу</li>
+<li>401: Unauthorized - не авторизован</li>
+<li>403: Forbidden - нет доступа к файлу (обычно у самого сервера)</li>
+<li>404: Not Found - файл не найден</li>
+<li>418: I'm a teapot - первоапрельская шутка</li>
+<li>451: Unavailable For Legal Reasons - нельзя отдавать файл по закону</li>
+</ul>
+</li>
+<li>5xx: Server Error
+<ul>
+<li>500: Internal Server Error - что-то пошло не так</li>
+<li>502: Bad Gateway - серверу для выполнения запроса нужно сделать запросы, но тот сервер недоступен</li>
+</ul>
+</li>
+</ul>
+<h3 id="Заголовки"><a class="header" href="#Заголовки">Заголовки</a></h3>
+<p>Со стороны клиента:</p>
+<ul>
+<li><code>Host</code> - с какого хоста получаем</li>
+<li><code>Connection: Keep-Alive</code>, чтобы не закрывали соединение после отправки данных (будут ещё запросы), т.к. повторное открытие это опять three-way handshake</li>
+<li><code>Accept-Encoding: gzip, deflate</code> - нам можно отправить сжатый ответ</li>
+<li><code>Accept-Languages</code> - локали клиента.</li>
+</ul>
+<p>Со стороны сервера:</p>
+<ul>
+<li><code>Content-Type</code> - тип данных в ответе</li>
+<li><code>Content-Length</code> - длина данных в ответе</li>
+<li><code>Refresh: n; url</code> - через n секунд загрузи <code>url</code> вместо этой страницы.</li>
+</ul>
+<h4 id="Проверка-изменения"><a class="header" href="#Проверка-изменения">Проверка изменения</a></h4>
+<p>Мы хотим говорить серверу, что у нас есть некоторая версия файла в кеше, чтобы не загружать файл заново, если он не изменился.
+В GET для этого можно:</p>
+<ul>
+<li>написать <code>If-Modified-Since: дата</code></li>
+<li>передать <code>If-None-Match</code> с некоторым ETag (хеш)</li>
+</ul>
+<h4 id="ranges"><a class="header" href="#ranges">Ranges</a></h4>
+<p>Заголовок <code>Range</code> позволяет запрашивать часть файла, они будут отданы с заголовком <code>Content-Range</code> или будет 416 Range Not Satisfiable.
+Это сделано для ситуации, когда соединение прерывается и не хочется загружать большой файл с начала.</p>
+<p>С <code>Range</code> логично передавать какую-то проверку того, что файл не изменился, для этого есть <code>If-Match</code> и <code>If-Unmodified-Since</code>.</p>
+<h4 id="Кеширование"><a class="header" href="#Кеширование">Кеширование</a></h4>
+<p>Сервер может сказать <code>Expires: дата</code> и тогда сервер даёт гарантию того, что до даты ресурс не изменится.</p>
+<p>Для прокси-серверов есть заголовки:</p>
+<ul>
+<li><code>Cache-Control: no-cache</code> - не кешировать запросы</li>
+<li><code>Cache-Control: only-if-cached</code> - отдавать только из кеша</li>
+<li><code>Cache-Control: max-age=n</code> - отдавать из кеша только если он не старше n секунд</li>
+<li><code>Age</code> - прокси-сервер пишет возраст кеша.</li>
+<li><code>Pragme: no-cache</code> - сервер с ресурсом говорит прокси-серверам не кешировать (в браузере кешировать всё ещё можно). Обычно включен.</li>
+</ul>
+<h4 id="user-agent"><a class="header" href="#user-agent">User-Agent</a></h4>
+<p>Заголовок <code>User-Agent</code> позволяет серверу различать браузеры.
+Это позволяет поддерживать IE 5, в котором частично сломан JS.</p>
+<h4 id="cookies"><a class="header" href="#cookies">Cookies</a></h4>
+<p>Позволяет хранить данные на стороне клиента.</p>
+<p>Пример:</p>
+<pre><code>Set-Cookie: userLogin=melnikov; Expires=Wed, 09 Jun 2021 10:18:14 GMT;
+Domain=.ifmo.ru; Path=/; Secure; HttpOnly
+</code></pre>
+<ul>
+<li><code>Expires</code> - дата истечения куки.</li>
+<li><code>Domain</code> - домены, которым можно отдать куку (поддомены указанного домена).</li>
+<li><code>Path</code> - фильтр по пути сайта, куда можно отдать куку</li>
+<li><code>Secure</code> - если выставлено, то можно передавать только по HTTPS.</li>
+<li><code>HttpOnly</code> - запрещает JS доступ к этой куке.</li>
+</ul>
+<p>Клиент при любом запросе дописывает в заголовок <code>Cookie</code> имя куки и значение.</p>
+<p>Куки нельзя ставить на домены первого уровня по очевидным причинам.
+На некоторые домены не первого уровня тоже нельзя ставить куки, например <code>.co.uk</code>. </p>
+<h3 id="Версии-http"><a class="header" href="#Версии-http">Версии HTTP</a></h3>
+<p>Появился HTTP/2, названный также SPDY:</p>
+<ul>
+<li>Позволяет по одному TCP соединению отправлять несколько файлов параллельно.</li>
+<li>Server push - сервер может отправлять файлы, которые ещё не запрашивал.</li>
+<li>Почти все зашифровано.</li>
+</ul>
+<p>HTTP/3 реализовали поверх UDP через QUIC (почти TCP поверх UDP, но на клиенте).</p>
+<h2 id="Шифрование"><a class="header" href="#Шифрование">Шифрование</a></h2>
+<p>Асимметричное шифрование происходит, когда у каждого пользователя есть два ключа — публичный и приватный. Можно делать две вещи:</p>
+<ul>
+<li>Публичным ключом можно зашифровать данные и тот, у кого есть приватный ключ, сможет их расшифровать</li>
+<li>Можно добавить к сообщению хеш такой, что любой человек с публичным ключом сможет проверить, что создатель действительно является владельцем приватного ключа.</li>
+</ul>
+<p>Шифрование Диффи-Хеллмана позволяет получить общий приватный ключ, который никто кроме них не знает.
+<img src="img/diffe_hellman.png" alt="diffie helmann" /></p>
+<h2 id="tls"><a class="header" href="#tls">TLS</a></h2>
+<p>TLS позволяет обернуть соединение в себя и получить зашифрованное соединение.</p>
+<p>Раньше он был известен как SSL.
+Есть deprecated версии с дырами: SSL, SSL 2.0, SSL 3.0, TLS 1.0, TLS 1.1.</p>
+<p>TLS 1.2 и TLS 1.3 работают.</p>
+<p>Мы получаем общий сессионный ключ через Diffie-Hellman и дальше все данные шифруются симметричным шифрованием.</p>
+<p>Perfect Forward Secrecy - если сервер взломан, то нельзя расшифровать сообщения из прошлого.
+Для этого на каждое соединение генерируется новый ключ, который не сохраняется. Даже в течение сессии ключ иногда перегенерирурется.</p>
+<p>Как нам понять, что публичный ключ сайта настоящий?</p>
+<ol>
+<li>Поверить</li>
+<li>Сохранить ключ локально из надежного источника.</li>
+<li>Пойти к кому-то, кому мы верим.</li>
+</ol>
+<p>Этот кто-то - Certificate Authority (CA).
+Это специальная организация, которая подписывает своим приватным ключом подпись на паре (домен, публичный ключ).
+У клиента есть список всех публичных ключей CA, которым он доверяет.</p>
+<p>Сертификаты выдаются только на ограниченное время, обычно меньше года.</p>
+<p>В реальности создаются промежуточные ключи, которые выдаются (CA самому себе) временно.
+Кроме того, промежуточные ключи может подписывать не один CA, это позволяет вводить новые CA. Просто ввести новую CA невозможно, т.к. их ключи зашиты в оси и невозможно заставить всех эти ключи обновить.
+Браузеры пытаются бороться с такой ленивостью и носят с собой списки ключей, вместо того, чтобы брать их из ОС.</p>
+<p>Существует также Certificate Transparency - база данных, где хранятся валидные сертификаты.
+Если кто-то видет паленый сертификат (CA решила заскамить), то это можно зарепортить и ключ CA отзовут.</p>
+<p>Subject Alternative Names позволяют написать сертификат на несколько доменов.</p>
+<p>Для получения сертификатов есть организация ACME, которая просит написать что-то в dns и выдаст сертификат.</p>
+<h3 id="Протокол"><a class="header" href="#Протокол">Протокол</a></h3>
+<p>Клиент отправляет ClientHello, в котором указаны:</p>
+<ul>
+<li><code>cipher_suites</code> - поддерживаемые виды шифрования</li>
+<li><code>random</code> - псевдослучайный номер</li>
+<li><code>extensions</code> - расширения</li>
+</ul>
+<p>Сервер отвечает аналогичным ServerHello, после чего клиент выбирает вид шифрования и начинается общение.</p>
+<p>Важные расширения:</p>
+<ul>
+<li>SNI (Server Name Indication): на одном и том же адресе может быть несколько доменных имен. SNI позволяет сказать, к какому доменному имени мы подключаемся. </li>
+<li>APLN (Application-Layer Protocol Negotiation): выбор протокола.</li>
+</ul>
+<p>Есть проблема - SNI не зашифрован (и нас могут блокнуть через DPI). Поэтому придумали:</p>
+<ul>
+<li>ESNI (Enctrypted SNI): зашифруем SNI публичным сервера, который лежит в TXT записи <code>_esni.example.com</code>. Тогда нужен ещё и безопасный DNS.</li>
+<li>ECH (Encrypted Client Hello): будет шифровать весь hello запрос. Там какие-то приколы с тем, что зашифрованный Hello лежит в незашифрованном, но я не понял.</li>
+</ul>
+<p>Не дописано.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="lecture_7.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="lecture_7.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
